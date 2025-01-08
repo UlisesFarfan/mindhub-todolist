@@ -15,7 +15,7 @@ public class User {
 
     private String name, password, email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Task> task = new HashSet<>();
 
     public User() {}
