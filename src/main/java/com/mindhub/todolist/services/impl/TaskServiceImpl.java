@@ -3,18 +3,14 @@ package com.mindhub.todolist.services.impl;
 import com.mindhub.todolist.dtos.NewTask;
 import com.mindhub.todolist.dtos.TaskDTO;
 import com.mindhub.todolist.dtos.UpdateTask;
-import com.mindhub.todolist.dtos.UserDTO;
 import com.mindhub.todolist.exceptions.TaskExceptions;
-import com.mindhub.todolist.exceptions.UserExceptions;
 import com.mindhub.todolist.models.Task;
 import com.mindhub.todolist.repositories.TaskRepository;
 import com.mindhub.todolist.services.TaskServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskRejectedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TaskServiceImpl implements TaskServices {
@@ -39,7 +35,7 @@ public class TaskServiceImpl implements TaskServices {
 
     @Override
     public TaskDTO createNewTask(NewTask newTask) {
-        Task task = new Task(newTask.title(), newTask.description(), newTask.status(), newTask.user());
+        Task task = new Task(newTask.title(), newTask.description(), newTask.status(), newTask.userModel());
         Task savedTask = saveTask((task));
         return  new TaskDTO(savedTask);
     }

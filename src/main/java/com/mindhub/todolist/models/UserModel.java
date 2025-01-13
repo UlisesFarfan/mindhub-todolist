@@ -4,26 +4,37 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name, password, email;
+    private String name, password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(unique = true)
+    private String email;
+
+    private RoleType role = RoleType.USER;
+
+    @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Task> task = new HashSet<>();
 
-    public User() {}
+    public UserModel() {}
 
-    public User(String name, String password, String email) {
+    public UserModel(String name, String password, String email) {
         this.name = name;
         this.password = password;
         this.email = email;
+    }
+
+    public UserModel(String name, String password, String email, RoleType roleType) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.role = roleType;
     }
 
     public Long getId() {
@@ -50,15 +61,23 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Set<Task> getTask() {
         return task;
     }
 
     public void setTask(Set<Task> task) {
         this.task = task;
+    }
+
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

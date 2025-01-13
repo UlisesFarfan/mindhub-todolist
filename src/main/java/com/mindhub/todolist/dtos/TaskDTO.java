@@ -2,8 +2,6 @@ package com.mindhub.todolist.dtos;
 
 import com.mindhub.todolist.models.Task;
 
-import java.util.UUID;
-
 public class TaskDTO {
     private final Long id;
     private final String title, description;

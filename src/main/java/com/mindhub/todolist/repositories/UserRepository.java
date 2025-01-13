@@ -1,7 +1,10 @@
 package com.mindhub.todolist.repositories;
 
-import com.mindhub.todolist.models.User;
+import com.mindhub.todolist.models.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<UserModel, Long> {
+    Optional<UserModel> findByEmail(String email);
 }

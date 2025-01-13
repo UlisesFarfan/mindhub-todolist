@@ -1,14 +1,14 @@
 package com.mindhub.todolist.dtos;
 
-import com.mindhub.todolist.models.User;
+import com.mindhub.todolist.models.UserModel;
 
 public class UserDTO {
     private final Long id;
     private final String name, email;
-    public UserDTO(User user) {
-        id = user.getId();
-        name = user.getName();
-        email = user.getEmail();
+    public UserDTO(UserModel userModel) {
+        id = userModel.getId();
+        name = userModel.getName();
+        email = userModel.getEmail();
     }
 
     public Long getId() {

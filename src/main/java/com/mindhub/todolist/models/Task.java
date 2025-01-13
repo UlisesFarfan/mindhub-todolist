@@ -2,10 +2,6 @@ package com.mindhub.todolist.models;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
 @Entity
 public class Task {
     @Id
@@ -23,15 +19,15 @@ public class Task {
     private TaskStatus status;
 
     @ManyToOne
-    private User user;
+    private UserModel userModel;
 
     public Task () {}
 
-    public Task(String title, String description, TaskStatus status, User user) {
+    public Task(String title, String description, TaskStatus status, UserModel userModel) {
         this.title = title;
         this.description = description;
         this.status = status;
-        this.user = user;
+        this.userModel = userModel;
     }
 
     public Long getId() {
@@ -62,11 +58,11 @@ public class Task {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public UserModel getUser() {
+        return userModel;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserModel userModel) {
+        this.userModel = userModel;
     }
 }
