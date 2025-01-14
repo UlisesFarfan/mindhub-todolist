@@ -41,6 +41,12 @@ public class AdminTaskController {
         return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTaskById(@PathVariable Long id) throws TaskExceptions, UserExceptions {
+        TaskDTO taskDTO = taskServices.getTaskDTOById(id);
+        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTaskById(@RequestBody UpdateTask updateTask, @PathVariable Long id) throws TaskExceptions {
         if(updateTask.title().isBlank() || updateTask.description().isBlank()) {
