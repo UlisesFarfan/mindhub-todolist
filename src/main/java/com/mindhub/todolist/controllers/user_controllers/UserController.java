@@ -10,6 +10,8 @@ import com.mindhub.todolist.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,10 +24,10 @@ public class UserController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) throws UserExceptions {
+    @GetMapping("/")
+    public ResponseEntity<?> getUserById() throws UserExceptions {
         try {
-            customUserDetailsService.isTheUserAuth(id);
+            Long id = customUserDetailsService.getAuthUserId();
             GetUserDTO userDTO = userServices.getUserDTOById(id);
             return new ResponseEntity<>(userDTO, HttpStatus.OK);
         } catch (UserExceptions e) {
@@ -33,10 +35,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateUserById(@RequestBody UpdateUser updateUser, @PathVariable Long id) throws UserExceptions {
+    @PutMapping("/")
+    public ResponseEntity<?> updateUserById(@RequestBody UpdateUser updateUser) throws UserExceptions {
         try {
-            customUserDetailsService.isTheUserAuth(id);
+            Long id = customUserDetailsService.getAuthUserId();
             if (updateUser.name().isBlank()) {
                 return new ResponseEntity<>("El nombre no puede estar en blanco", HttpStatus.BAD_REQUEST);
             }
@@ -47,15 +49,11 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public  ResponseEntity<?> deleteUserById(@PathVariable Long id) throws UserExceptions {
-        try {
-            customUserDetailsService.isTheUserAuth(id);
-            userServices.deleteUserById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (UserExceptions exceptions) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @DeleteMapping("/")
+    public  ResponseEntity<?> deleteUserById() throws UserExceptions {
+        Long id = customUserDetailsService.getAuthUserId();
+        userServices.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
