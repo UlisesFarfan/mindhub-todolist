@@ -20,12 +20,17 @@ public class TaskServiceImpl implements TaskServices {
     
     @Override
     public TaskDTO getTaskDTOById(Long id) throws TaskExceptions {
-        return new TaskDTO(getTaskById(id));
+        try {
+            return new TaskDTO(getTaskById(id));
+        } catch (TaskExceptions e) {
+            throw new TaskExceptions("Error al obtener la tarea por ID: " + e.getMessage());
+        }
     }
 
     @Override
     public Task getTaskById(Long id) throws TaskExceptions {
-        return taskRepository.findById(id).orElseThrow( () -> new TaskExceptions("No se encontro la tarea"));
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskExceptions("No se encontró la tarea con ID: " + id));
     }
 
     @Override
@@ -36,8 +41,8 @@ public class TaskServiceImpl implements TaskServices {
     @Override
     public TaskDTO createNewTask(NewTask newTask) {
         Task task = new Task(newTask.title(), newTask.description(), newTask.status(), newTask.userModel());
-        Task savedTask = saveTask((task));
-        return  new TaskDTO(savedTask);
+        Task savedTask = saveTask(task);
+        return new TaskDTO(savedTask);
     }
 
     @Override

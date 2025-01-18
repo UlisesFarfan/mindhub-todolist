@@ -47,7 +47,6 @@ public class SecurityConfig {
                                 .requestMatchers("/api/admin/**").hasAuthority("ADMIN")// Allow public access to specific endpoints
                                 .anyRequest().denyAll() // All other requests must be authenticated
                 )
-                .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers ->
                         headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable) // Deshabilitar frameOptions
                 )

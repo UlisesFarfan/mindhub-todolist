@@ -45,11 +45,11 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody NewUser newUser) {
-        if(newUser.email().isBlank() || newUser.password().isBlank() || newUser.name().isBlank()) {
-            return new ResponseEntity<>("Invalid data", HttpStatus.BAD_REQUEST);
+        if(newUser.email() == null || newUser.email().isBlank() || newUser.password() == null || newUser.password().isBlank() || newUser.name() == null || newUser.name().isBlank()) {
+            return new ResponseEntity<>("Invalid Data", HttpStatus.BAD_REQUEST);
         }
         userServices.createNewUser(newUser);
-        return new ResponseEntity<>("Se creo la persona", HttpStatus.CREATED);
+        return new ResponseEntity<>("Registrado con exito", HttpStatus.CREATED);
     }
 
 }
