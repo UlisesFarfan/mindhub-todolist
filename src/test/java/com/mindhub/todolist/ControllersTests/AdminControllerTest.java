@@ -1,4 +1,4 @@
-package com.mindhub.todolist;
+package com.mindhub.todolist.ControllersTests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
